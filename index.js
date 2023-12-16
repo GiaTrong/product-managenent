@@ -3,8 +3,16 @@ const express = require("express");
 const route = require("./routes/client/index.route");
 require("dotenv").config();
 
+// use express
 const app = express();
+// port
 const port = process.env.PORT;
+
+// database 
+const database = require("./config/database")
+
+//run database
+database.connect();
 
 // use pug
 app.set("views", "./views");
