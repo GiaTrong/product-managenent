@@ -1,9 +1,15 @@
-const dashboardRoutes = require("./dashboard.route")
 const systemConfig = require("../../config/system")
 
-// cách export bên nodejs = EXPORT bên fe
+// dashboard route
+const dashboardRoutes = require("./dashboard.route")
+// product route
+const productRoutes = require("./product.route")
+
 module.exports = (app) => {
   const PATH_ADMIN = systemConfig.prefixAdmin;
   // route: admin
   app.use(PATH_ADMIN + "/dashboard", dashboardRoutes);
+
+  //
+  app.use(PATH_ADMIN + "/products", productRoutes);
 };

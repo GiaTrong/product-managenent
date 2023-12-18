@@ -1,3 +1,4 @@
+// [GET] /products
 const Product = require("../../models/product.modal");
 
 // module.exports.index : index is name of function

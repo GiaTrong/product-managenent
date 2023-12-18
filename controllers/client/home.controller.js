@@ -1,3 +1,4 @@
+// [GET] /
 // module.exports.index : index is name of function
 module.exports.index = (req, res) => {
   res.render("client/pages/home/index", {
