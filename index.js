@@ -15,12 +15,18 @@ const port = process.env.PORT;
 // database
 const database = require("./config/database");
 
+// system config
+const systemConfig = require("./config/system")
+
 //run database
 database.connect();
 
 // use pug
 app.set("views", "./views");
 app.set("view engine", "pug");
+
+//  APP VARIABLES LOCALS
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 // nhúng file tĩnh
 app.use(express.static("public"));
