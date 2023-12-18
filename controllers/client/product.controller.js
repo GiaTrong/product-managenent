@@ -7,7 +7,7 @@ module.exports.index = async (req, res) => {
     // status: "active",
     // deleted: true
   });
-  console.log(products);
+  // console.log(products);
 
   // give a new price
   const newProducts = products.map((item) => {

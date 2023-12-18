@@ -1,6 +1,10 @@
 // cách  nhúng của bên express và bên nodejs
 const express = require("express");
+// route client
 const route = require("./routes/client/index.route");
+// route admin
+const routeAdmin = require("./routes/admin/index.route");
+// use env
 require("dotenv").config();
 
 // use express
@@ -8,8 +12,8 @@ const app = express();
 // port
 const port = process.env.PORT;
 
-// database 
-const database = require("./config/database")
+// database
+const database = require("./config/database");
 
 //run database
 database.connect();
@@ -23,6 +27,7 @@ app.use(express.static("public"));
 
 // Routes
 route(app);
+routeAdmin(app);
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);

@@ -13,7 +13,10 @@ const productSchema = new mongoose.Schema({
   deleted: Boolean,
 });
 
-//
+// create Product from 
+// - collection
+// - model
+// - name of collection which you need to give database
 const Product = mongoose.model("Product", productSchema, "products");
 
 module.exports = Product;
