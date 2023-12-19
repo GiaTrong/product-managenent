@@ -28,3 +28,34 @@ if(buttonStatus.length > 0) {
         })
     })
 }
+
+// end btn status
+
+// FORM SEARCH
+const formSearch = document.querySelector("#form-search")
+
+// console.log(formSearch)
+if(formSearch) {
+    //
+    let url = new URL(window.location.href);
+
+    formSearch.addEventListener("submit", (e) => {
+        // prevent move page
+        e.preventDefault();
+        //
+        const keyword = e.target.elements.keyword.value
+        //
+        if(keyword) {
+            // những cái sau dấu hỏi => ngta gọi là searchParams
+            // if you have status, you will change the url
+            url.searchParams.set("keyword", keyword);
+        } else {
+            // or you dont have, remove KEY status in URL 
+            url.searchParams.delete("keyword");
+        }
+
+        // câu lệnh chuyển hướng
+        window.location.href = url.href
+    })
+}
+// END FORM SEARCH
