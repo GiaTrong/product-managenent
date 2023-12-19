@@ -1,34 +1,15 @@
 // [GET] /admin/dashboard
 
+// model database
 const Product = require("../../models/product.modal");
+// filter
+const filerStatusHelper = require("../../helpers/filterStatus")
 
 module.exports.index = async (req, res) => {
-  // create buttons on BackEnd
-  let filerStatus = [
-    {
-      name: "Tất cả",
-      status: "",
-      class: ""
-    },
-    {
-      name: "Hoạt động",
-      status: "active",
-      class: ""
-    },
-    {
-      name: "Dừng hoạt động",
-      status: "inactive",
-      class: ""
-    },
-  ]
-
-  // params: status => class: active in button
-  if(req.query.status) {
-    const index = filerStatus.findIndex(item => item.status == req.query.status)
-    filerStatus[index].class = "active";
-  } else {
-    filerStatus[0].class = "active";
-  }
+  
+  // FILTER => tách hẳn thằng filter ra 1 cái module riêng để
+  // reuse cho dễ
+  const filerStatus = filerStatusHelper(req.query);
 
   // req: data in URL
   // query: LẤY PARAMS
