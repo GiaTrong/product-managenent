@@ -4,6 +4,8 @@
 const Product = require("../../models/product.modal");
 // filter
 const filerStatusHelper = require("../../helpers/filterStatus")
+// search
+const searchStatusHelper = require("../../helpers/search")
 
 module.exports.index = async (req, res) => {
   
@@ -25,14 +27,13 @@ module.exports.index = async (req, res) => {
     find.status = req.query.status;
   }
 
-  // INPUT
-  // muốn tìm mà ko cần phải fix cứng giống hệt => REGEX
-  let keyword = "";
-  if(req.query.keyword) {
-    keyword = req.query.keyword;
-
-    const regex = new RegExp(keyword, "i"); // "i": tham số thứ 2, KHÔNG PHÂN BIỆT HOA THƯỜNG
-    find.title = regex;
+  // search => return {
+  // keyword: "...", regex: "..."
+  // }
+  const objectSearch = searchStatusHelper(req.query);
+  // console.log(objectSearch)
+  if(objectSearch.regex) {
+    find.title = objectSearch.regex;
   }
 
   // give a data product
@@ -45,6 +46,6 @@ module.exports.index = async (req, res) => {
     pageTitle: "Trang san pham",
     products: products,
     filerStatus: filerStatus,
-    keyword: keyword
+    keyword: objectSearch.keyword
   });
 };
