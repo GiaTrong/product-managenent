@@ -6,6 +6,8 @@ const Product = require("../../models/product.modal");
 const filerStatusHelper = require("../../helpers/filterStatus");
 // search
 const searchStatusHelper = require("../../helpers/search");
+// pagination
+const paginationHelper = require("../../helpers/pagination");
 
 module.exports.index = async (req, res) => {
   // FILTER => tách hẳn thằng filter ra 1 cái module riêng để
@@ -37,23 +39,18 @@ module.exports.index = async (req, res) => {
   //  END search
 
   // pagination
-  let objectPagination = {
-    currentPage: 1,
-    limitItem: 4,
-  };
 
-  if (req.query.page) {
-    objectPagination.currentPage = parseInt(req.query.page);
-  }
+  // count products
+  const countProduct = await Product.countDocuments(find); 
 
-  // skip = (trang hiện tại - 1) * số lượng phần tử mỗi trang
-  objectPagination.skip =
-    (objectPagination.currentPage - 1) * objectPagination.limitItem;
-
-  // amount of page
-  const countProduct = await Product.countDocuments(find);
-  const totalPage = Math.ceil(countProduct / objectPagination.limitItem); 
-  objectPagination.totalPage = totalPage;
+  let objectPagination = paginationHelper(
+    {
+      currentPage: 1,
+      limitItem: 4,
+    },
+    req.query,
+    countProduct
+  );
   // console.log(totalPage)
 
   // END pagination
@@ -73,6 +70,6 @@ module.exports.index = async (req, res) => {
     products: products,
     filerStatus: filerStatus,
     keyword: objectSearch.keyword,
-    pagination: objectPagination
+    pagination: objectPagination,
   });
 };

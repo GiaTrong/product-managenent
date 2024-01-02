@@ -25,7 +25,7 @@ database.connect();
 app.set("views", "./views");
 app.set("view engine", "pug");
 
-//  APP VARIABLES LOCALS
+//  APP VARIABLES LOCALS => thiết lập biến toàn cục cho cả app của bạn
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 // nhúng file tĩnh
