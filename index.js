@@ -2,6 +2,8 @@
 const express = require("express");
 // override method
 const methodOverride = require('method-override')
+// body Parser
+var bodyParser = require('body-parser')
 // route client
 const route = require("./routes/client/index.route");
 // route admin
@@ -15,6 +17,9 @@ const app = express();
 app.use(methodOverride('_method'))
 // port
 const port = process.env.PORT;
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
 
 // database
 const database = require("./config/database");

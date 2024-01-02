@@ -12,4 +12,6 @@ router.get("/", controller.index);
 // ĐÚNG ROUTER + đúng PHƯƠNG THỨC
 router.patch("/change-status/:status/:id", controller.changeStatus);
 
+router.patch("/change-multi", controller.changeMulti);
+
 module.exports = router;

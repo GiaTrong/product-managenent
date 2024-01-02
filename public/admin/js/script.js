@@ -78,3 +78,81 @@ if (buttonPagination) {
   });
 }
 // END PAGINATION
+
+// CHECK BOX
+const checkBoxMulti = document.querySelector("[checkbox-multi]");
+if (checkBoxMulti) {
+  // input checkall
+  const inputCheckAll = checkBoxMulti.querySelector("input[name='checkall']");
+  // input id
+  const inputsId = checkBoxMulti.querySelectorAll("input[name='id']");
+
+  // logic check all
+  inputCheckAll.addEventListener("click", () => {
+    if (inputCheckAll.checked) {
+      // check tất cả
+      inputsId.forEach((input) => {
+        input.checked = true;
+      });
+    } else {
+      // bỏ check tất cả
+      inputsId.forEach((input) => {
+        input.checked = false;
+      });
+    }
+  });
+
+  // logic từng cái input
+  inputsId.forEach((input) => {
+    input.addEventListener("click", () => {
+      const countChecked = checkBoxMulti.querySelectorAll(
+        "input[name='id']:checked"
+      ).length;
+      // console.log(countChecked);
+      // console.log(inputsId.length);
+
+      //
+      if (countChecked == inputsId.length) {
+        inputCheckAll.checked = true;
+      } else {
+        inputCheckAll.checked = false;
+      }
+    });
+  });
+
+  // console.log(inputCheckAll.name);
+  // console.log(inputsId);
+}
+// END CHECK BOX
+
+// FORM CHANGE MULTI
+const formChangeMulti = document.querySelector("[form-change-multi]");
+// console.log(formChangeMulti)
+if (formChangeMulti) {
+  formChangeMulti.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const checkBoxMulti = document.querySelector("[checkbox-multi]");
+    const inputChecked = checkBoxMulti.querySelectorAll(
+      "input[name='id']:checked"
+    );
+
+    if (inputChecked.length > 0) {
+      let ids = [];
+      const inputIds = formChangeMulti.querySelector("input[name='ids']");
+
+      inputChecked.forEach((input) => {
+        const id = input.value;
+        ids.push(id);
+      });
+
+      inputIds.value = ids.join(", ");
+      // console.log(inputIds.value)
+
+      formChangeMulti.submit();
+    } else {
+      alert("Vui long chon it nhat 1 ban ghi");
+    }
+  });
+}
+// END FORM CHANGE MULTI

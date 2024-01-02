@@ -40,7 +40,7 @@ module.exports.index = async (req, res) => {
   // pagination
 
   // count products
-  const countProduct = await Product.countDocuments(find); 
+  const countProduct = await Product.countDocuments(find);
 
   let objectPagination = paginationHelper(
     {
@@ -73,16 +73,36 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /admin/products/change-status/:status/:id
+// [PATH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
   // render viewer
-  const status = req.params.status
-  const id = req.params.id
+  const status = req.params.status;
+  const id = req.params.id;
 
   // await Product.updateOne({_id} , {[cập nhật trường nào]})
-  await Product.updateOne({_id: id} , {status: status})
+  await Product.updateOne({ _id: id }, { status: status });
 
   // chuyển hướng sang đâu đó
   // chuyền chữ BACK vào => TỰ ĐỘNG QUAY LẠI TRANG TRƯỚC ĐÓ
-  res.redirect("back")
+  res.redirect("back");
+};
+
+// [PATH] /admin/products/change-multi
+module.exports.changeMulti = async (req, res) => {
+  const type = req.body.type;
+  const ids = req.body.ids.split(", ");
+
+  switch (type) {
+    case "active":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      break;
+    case "inactive":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      break;
+
+    default:
+      break;
+  }
+
+  res.redirect("back");
 };
