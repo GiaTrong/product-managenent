@@ -1,5 +1,7 @@
 // cách  nhúng của bên express và bên nodejs
 const express = require("express");
+// override method
+const methodOverride = require('method-override')
 // route client
 const route = require("./routes/client/index.route");
 // route admin
@@ -9,6 +11,8 @@ require("dotenv").config();
 
 // use express
 const app = express();
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
 // port
 const port = process.env.PORT;
 

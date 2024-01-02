@@ -5,7 +5,11 @@ const controller = require("../../controllers/admin/products.controller")
 
 router.get("/", controller.index);
 
+// người dùng truy cập vào phương thức get => mới chạy được
+// router.get("/change-status/:status/:id", controller.changeStatus);
+
 // :[name] => là 1 router động 
-router.get("/change-status/:status/:id", controller.changeStatus);
+// ĐÚNG ROUTER + đúng PHƯƠNG THỨC
+router.patch("/change-status/:status/:id", controller.changeStatus);
 
 module.exports = router;
