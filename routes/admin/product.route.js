@@ -3,6 +3,7 @@ const router = express.Router();
 
 const controller = require("../../controllers/admin/products.controller")
 
+// [GET]
 router.get("/", controller.index);
 
 // người dùng truy cập vào phương thức get => mới chạy được
@@ -12,6 +13,10 @@ router.get("/", controller.index);
 // ĐÚNG ROUTER + đúng PHƯƠNG THỨC
 router.patch("/change-status/:status/:id", controller.changeStatus);
 
+// [PATCH]
 router.patch("/change-multi", controller.changeMulti);
+
+// [DELETE]
+router.delete("/delete/:id", controller.deleteItem);
 
 module.exports = router;

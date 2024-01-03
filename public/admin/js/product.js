@@ -27,4 +27,30 @@ if (buttonChangeStatus.length > 0) {
 }
 // End Change Status
 
+// DELETE ITEM
+const buttonDelete = document.querySelectorAll("[button-delete]");
+if (buttonDelete) {
+  // form delete item
+  const formDeleteItem = document.querySelector("#form-delete-item");
+  const path = formDeleteItem.getAttribute("data-path");
 
+  // button delete
+  buttonDelete.forEach((button) => {
+    button.addEventListener("click", () => {
+      // console.log(button);
+      const isConfirm = confirm("Ban co chac muon xoa san pham ko");
+      if (isConfirm) {
+        const id = button.getAttribute("data-id");
+
+        const action = `${path}/${id}?_method=DELETE`;
+
+        // console.log(`${path}/${id}?_method=DELETE`)
+
+        formDeleteItem.action = action
+
+        formDeleteItem.submit();
+      }
+    });
+  });
+}
+// END DELETE ITEM
