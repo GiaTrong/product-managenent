@@ -111,10 +111,16 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id
 
-  console.log(req.params)
+  // console.log(req.params)
 
-  await Product.deleteOne({_id: id})
+  // xóa như này là xóa vĩnh viễn
+  // await Product.deleteOne({_id: id})
 
-  // res.send("oke")
+  // nên xóa MỀM => nghĩa là chỉ thay đổi cái phần mình muốn ko hiện ra thôi 
+  await Product.updateOne({_id: id}, {
+    deleted: true,
+    deletedAt: new Date()
+  })
+
   res.redirect("back");
 };
