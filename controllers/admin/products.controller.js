@@ -91,13 +91,21 @@ module.exports.changeStatus = async (req, res) => {
 module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
   const ids = req.body.ids.split(", ");
-  console.log(req.body)
+  console.log(req.body);
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
       break;
+
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      break;
+
+    case "delete-all":
+      await Product.updateMany({ _id: { $in: ids } }, { 
+        deleted: "true",
+        deletedAt: new Date()
+      });
       break;
 
     default:
@@ -109,18 +117,21 @@ module.exports.changeMulti = async (req, res) => {
 
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   // console.log(req.params)
 
   // xóa như này là xóa vĩnh viễn
   // await Product.deleteOne({_id: id})
 
-  // nên xóa MỀM => nghĩa là chỉ thay đổi cái phần mình muốn ko hiện ra thôi 
-  await Product.updateOne({_id: id}, {
-    deleted: true,
-    deletedAt: new Date()
-  })
+  // nên xóa MỀM => nghĩa là chỉ thay đổi cái phần mình muốn ko hiện ra thôi
+  await Product.updateOne(
+    { _id: id },
+    {
+      deleted: true,
+      deletedAt: new Date(),
+    }
+  );
 
   res.redirect("back");
 };
