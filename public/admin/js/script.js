@@ -138,14 +138,16 @@ if (formChangeMulti) {
     );
 
     // check type of SELECTED
-    const typeChange = e.target.elements.type.value
+    const typeChange = e.target.elements.type.value;
     // console.log(typeChange)
 
-    if(typeChange == "delete-all") {
-      const isConfirm = confirm("Bạn có chắc chắn muốn xóa NHỮNG sản phảm này hay không");
+    if (typeChange == "delete-all") {
+      const isConfirm = confirm(
+        "Bạn có chắc chắn muốn xóa NHỮNG sản phảm này hay không"
+      );
 
       // nếu KHÔNG ĐỒNG Ý => NHỮNG DÒNG CODE SAU KO XÉT NỮA
-      if(!isConfirm) {
+      if (!isConfirm) {
         return;
       }
     }
@@ -156,7 +158,21 @@ if (formChangeMulti) {
 
       inputChecked.forEach((input) => {
         const id = input.value;
-        ids.push(id);
+
+        // CHANGE POSITION
+        if (typeChange == "change-position") {
+          // Bài toán: Muốn đứng từ 1 thằng td con nhảy sang thằng tr cha => lấy thằng
+          // td con KHÁC cùng cha
+          const position = input
+            .closest("tr")
+            .querySelector("input[name='position']").value;
+
+          // console.log(position);
+
+          ids.push(`${id}-${position}`);
+        } else {
+          ids.push(id);
+        }
       });
 
       inputIds.value = ids.join(", ");

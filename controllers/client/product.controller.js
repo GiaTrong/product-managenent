@@ -6,8 +6,8 @@ module.exports.index = async (req, res) => {
   // give all products in database
   const products = await Product.find({
     // status: "active",
-    // deleted: true
-  });
+    // deleted: false,
+  }).sort({ position: "desc" });
   // console.log(products);
 
   // give a new price

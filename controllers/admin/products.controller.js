@@ -58,6 +58,7 @@ module.exports.index = async (req, res) => {
   // .limit(number) => chỉ lấy tưng đấy sản phẩm thôi
   // skip: bỏ qua bao nhiêu sản phẩm
   const products = await Product.find(find)
+    .sort({position: "desc"}) // sort FOLLOW 1 RECORD
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
@@ -102,10 +103,27 @@ module.exports.changeMulti = async (req, res) => {
       break;
 
     case "delete-all":
-      await Product.updateMany({ _id: { $in: ids } }, { 
-        deleted: "true",
-        deletedAt: new Date()
-      });
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        {
+          deleted: "true",
+          deletedAt: new Date(),
+        }
+      );
+      break;
+
+    case "change-position":
+      //  console.log(ids)
+      for (const item of ids) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+        await Product.updateOne(
+          { _id: id },
+          {
+            position: position,
+          }
+        );
+      }
       break;
 
     default:
