@@ -58,7 +58,7 @@ module.exports.index = async (req, res) => {
   // .limit(number) => chỉ lấy tưng đấy sản phẩm thôi
   // skip: bỏ qua bao nhiêu sản phẩm
   const products = await Product.find(find)
-    .sort({position: "desc"}) // sort FOLLOW 1 RECORD
+    .sort({ position: "desc" }) // sort FOLLOW 1 RECORD
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
@@ -83,6 +83,8 @@ module.exports.changeStatus = async (req, res) => {
   // await Product.updateOne({_id} , {[cập nhật trường nào]})
   await Product.updateOne({ _id: id }, { status: status });
 
+  req.flash("success", "Cập nhạt trạng thái thành công");
+
   // chuyển hướng sang đâu đó
   // chuyền chữ BACK vào => TỰ ĐỘNG QUAY LẠI TRANG TRƯỚC ĐÓ
   res.redirect("back");
@@ -96,10 +98,12 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      req.flash("success", "Cập nhật trạng thái thành công của nhiều sản phẩm");
       break;
 
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash("success", "Cập nhật trạng thái thành công của nhiều sản phẩm");
       break;
 
     case "delete-all":
