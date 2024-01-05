@@ -1,4 +1,8 @@
-const { default: mongoose, model } = require("mongoose");
+const mongoose = require("mongoose");
+// SLUG
+const slug = require('mongoose-slug-updater');
+mongoose.plugin(slug);
+
 // schema
 // create a new model
 const productSchema = new mongoose.Schema({
@@ -10,6 +14,11 @@ const productSchema = new mongoose.Schema({
   thumbnail: String,
   status: String,
   position: Number,
+  slug: {
+    type: String,
+    slug: "title",
+    unique: true,
+  },
   deleted: {
     type: Boolean,
     default: false,

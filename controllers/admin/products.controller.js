@@ -188,5 +188,6 @@ module.exports.createPost = async (req, res) => {
   // saving in DATABASE
   await product.save();
   // render viewer
-  res.redirect(`${systemConfig}/products`);
+  // console.log(`${systemConfig.prefixAdmin}/products`)
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
 };
