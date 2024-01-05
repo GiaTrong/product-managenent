@@ -10,11 +10,16 @@ const productSchema = new mongoose.Schema({
   thumbnail: String,
   status: String,
   position: Number,
-  deleted: Boolean,
-  deletedAt: Date
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
+  deletedAt: Date,
+}, {
+  timestamps: true,
 });
 
-// create Product from 
+// create Product from
 // - collection
 // - model
 // - name of collection which you need to give database

@@ -19,4 +19,11 @@ router.patch("/change-multi", controller.changeMulti);
 // [DELETE]
 router.delete("/delete/:id", controller.deleteItem);
 
+// [GET]
+router.get("/create", controller.create);
+
+// [POST]
+router.post("/create", controller.createPost);
+
+
 module.exports = router;
