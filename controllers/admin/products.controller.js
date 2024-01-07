@@ -185,9 +185,10 @@ module.exports.createPost = async (req, res) => {
 
   // image
   // Không đi vào thư mực public mà lại đi thẳng vào thư mục uploads luôn
-  console.log(req.file);
-  req.body.thumbnail = `/uploads/${req.file.filename}`;
-
+  // console.log(req.file);
+  if (req.file.filename) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
   //create new Product
   const product = new Product(req.body);
   // saving in DATABASE

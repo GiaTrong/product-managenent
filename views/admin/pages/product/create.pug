@@ -62,7 +62,10 @@ block main
                 min="0"
             )
 
-        div(class="form-group")
+        div(
+            class="form-group"
+            upload-image
+        )
             label(for="thumbnail") Ảnh
             input(
                 type="file"
@@ -70,6 +73,16 @@ block main
                 id="thumbnail"
                 name="thumbnail"
                 accept="image/*"
+                upload-image-input
+            )
+            button(
+                class="btn btn-primary"
+                delete-image-button
+            ) Xóa ảnh
+            img(
+                src=""
+                upload-image-preview
+                class="image-preview"
             )
 
         div(class="form-group")

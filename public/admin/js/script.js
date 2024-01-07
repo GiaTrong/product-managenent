@@ -204,5 +204,39 @@ if (showAlert) {
     });
   }
 }
-
 // END SHOW ALERT
+
+// UPLOAD IMAGE
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+  // input => give a FAKE LINK => GIVE IMAGE
+  const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+  // img => preview
+  const uploadImagePreview = uploadImage.querySelector(
+    "[upload-image-preview]"
+  );
+  const deleteImageButton = uploadImage.querySelector("[delete-image-button]");
+
+  // change
+  uploadImageInput.addEventListener("change", (e) => {
+    // console.log(e.target.files);
+    // const times = ["10", "50", "20"];
+    // const [hour] = times; => cấu trúc destructuring => phá vỡ cấu trúc
+    const file = e.target.files[0];
+    if (file) {
+      // URL.createObjectURL(file): tạo 1 cái link ảnh tạm thời
+      uploadImagePreview.src = URL.createObjectURL(file);
+
+      // delete image
+      if (deleteImageButton) {
+        deleteImageButton.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          uploadImageInput.value = "";
+          uploadImagePreview.src = "";
+        });
+      }
+    }
+  });
+}
+// END UPLOAD IMAGE
