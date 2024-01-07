@@ -1,6 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
+// multer - up image in web
+const storageMulter = require("../../helpers/storageMulter")
+console.log(storageMulter())
+const multer  = require('multer')
+const upload = multer({ storage:  storageMulter() })
+// dest: link to WHERE save image
+
 const controller = require("../../controllers/admin/products.controller")
 
 // [GET]
@@ -23,7 +30,8 @@ router.delete("/delete/:id", controller.deleteItem);
 router.get("/create", controller.create);
 
 // [POST]
-router.post("/create", controller.createPost);
+// thumbnail: is link of image
+router.post("/create", upload.single('thumbnail'), controller.createPost);
 
 
 module.exports = router;

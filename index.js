@@ -45,7 +45,8 @@ app.use(cookieParser("fasfsdfsadfsadfsad")); // => save cookie
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 // END FLASH
-//  APP VARIABLES LOCALS => thiết lập biến toàn cục cho cả app của bạn
+
+//  APP VARIABLES LOCALS => thiết lập biến toàn cục cho TẤT CẢ FILE BUG của bạn
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 // nhúng file tĩnh
@@ -58,3 +59,4 @@ routeAdmin(app);
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
 });
+
