@@ -170,6 +170,7 @@ module.exports.create = async (req, res) => {
 
 // [CREATE - POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
+
   req.body.price = parseInt(req.body.price);
   req.body.stock = parseInt(req.body.stock);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
@@ -186,13 +187,13 @@ module.exports.createPost = async (req, res) => {
   // image
   // Không đi vào thư mực public mà lại đi thẳng vào thư mục uploads luôn
   // console.log(req.file);
-  if (req.file.filename) {
+  if (req.file) {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
   //create new Product
-  const product = new Product(req.body);
-  // saving in DATABASE
-  await product.save();
+  // const product = new Product(req.body);
+  // // saving in DATABASE
+  // await product.save();
   // render viewer
   // console.log(`${systemConfig.prefixAdmin}/products`)
   res.redirect(`${systemConfig.prefixAdmin}/products`);

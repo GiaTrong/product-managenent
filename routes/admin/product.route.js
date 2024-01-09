@@ -2,13 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 // multer - up image in web
-const storageMulter = require("../../helpers/storageMulter")
-console.log(storageMulter())
-const multer  = require('multer')
-const upload = multer({ storage:  storageMulter() })
+const storageMulter = require("../../helpers/storageMulter");
+console.log(storageMulter());
+const multer = require("multer");
+const upload = multer({ storage: storageMulter() });
 // dest: link to WHERE save image
 
-const controller = require("../../controllers/admin/products.controller")
+// controller
+const controller = require("../../controllers/admin/products.controller");
+
+// validate
+const validate = require("../../validate/admin/productValidate");
 
 // [GET]
 router.get("/", controller.index);
@@ -16,7 +20,7 @@ router.get("/", controller.index);
 // người dùng truy cập vào phương thức get => mới chạy được
 // router.get("/change-status/:status/:id", controller.changeStatus);
 
-// :[name] => là 1 router động 
+// :[name] => là 1 router động
 // ĐÚNG ROUTER + đúng PHƯƠNG THỨC
 router.patch("/change-status/:status/:id", controller.changeStatus);
 
@@ -31,7 +35,11 @@ router.get("/create", controller.create);
 
 // [POST]
 // thumbnail: is link of image
-router.post("/create", upload.single('thumbnail'), controller.createPost);
-
+router.post(
+  "/create",
+  upload.single("thumbnail"),
+  validate.createPost,
+  controller.createPost
+);
 
 module.exports = router;
