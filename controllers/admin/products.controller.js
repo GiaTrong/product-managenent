@@ -170,7 +170,6 @@ module.exports.create = async (req, res) => {
 
 // [CREATE - POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
-
   req.body.price = parseInt(req.body.price);
   req.body.stock = parseInt(req.body.stock);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
@@ -191,10 +190,61 @@ module.exports.createPost = async (req, res) => {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
   //create new Product
-  // const product = new Product(req.body);
+  const product = new Product(req.body);
   // // saving in DATABASE
-  // await product.save();
+  await product.save();
   // render viewer
   // console.log(`${systemConfig.prefixAdmin}/products`)
   res.redirect(`${systemConfig.prefixAdmin}/products`);
+};
+
+// [EDIT - GET] /admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+  try {
+    //console.log(req.params) //:id => lấy ra được cái id
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+
+    const product = await Product.findOne(find);
+
+    console.log(product);
+    // render viewer
+    res.render("admin/pages/product/edit", {
+      pageTitle: "Chỉnh sửa sản phẩm",
+      product: product,
+    });
+  } catch (error) {
+    req.flash("error", "Cập nhật sản phẩm thất bại");
+    req.redirect("back");
+  }
+};
+
+// [EDIT - PATCH] /admin/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.stock = parseInt(req.body.stock);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+
+  // case: POSITION : AUTO INCREASE
+  if (req.body.position == "") {
+    const countProduct = await Product.countDocuments();
+    req.body.position = countProduct + 1;
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+
+  // image
+  if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
+  try {
+    await Product.updateOne({ _id: req.params.id }, req.body);
+    req.flash("success", "Cập nhạt sp thành công");
+  } catch (error) {
+    req.flash("error", "Cập nhật sản phẩm thất bại");
+  }
+  // render viewer
+  res.redirect(`back`);
 };

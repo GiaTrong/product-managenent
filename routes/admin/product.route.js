@@ -42,4 +42,15 @@ router.post(
   controller.createPost
 );
 
+// [GET] /admin/products/edit
+router.get("/edit/:id", controller.edit);
+
+// [PATCH] /admin/products/edit
+router.patch(
+  "/edit/:id",
+  upload.single("thumbnail"),
+  validate.createPost,
+  controller.editPatch
+);
+
 module.exports = router;

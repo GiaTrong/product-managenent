@@ -208,6 +208,16 @@ if (showAlert) {
 
 // UPLOAD IMAGE
 const uploadImage = document.querySelector("[upload-image]");
+const deleteImageButton = uploadImage.querySelector("[delete-image-button]");
+
+if (uploadImage.querySelector("[upload-image-preview]").src) {
+  deleteImageButton.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    uploadImage.querySelector("[upload-image-preview]").src = "";
+  });
+}
+
 if (uploadImage) {
   // input => give a FAKE LINK => GIVE IMAGE
   const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
@@ -215,7 +225,6 @@ if (uploadImage) {
   const uploadImagePreview = uploadImage.querySelector(
     "[upload-image-preview]"
   );
-  const deleteImageButton = uploadImage.querySelector("[delete-image-button]");
 
   // change
   uploadImageInput.addEventListener("change", (e) => {

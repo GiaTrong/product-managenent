@@ -10,6 +10,6 @@ module.exports = (app) => {
   // route: admin
   app.use(PATH_ADMIN + "/dashboard", dashboardRoutes);
 
-  //
+  // /admin/products
   app.use(PATH_ADMIN + "/products", productRoutes);
 };
