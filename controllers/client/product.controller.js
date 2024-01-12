@@ -1,7 +1,7 @@
 // [GET] /products
 const Product = require("../../models/product.modal");
 
-// module.exports.index : index is name of function
+//[GET] module.exports.index : index is name of function
 module.exports.index = async (req, res) => {
   // give all products in database
   const products = await Product.find({
@@ -25,4 +25,24 @@ module.exports.index = async (req, res) => {
     pageTitle: "Danh sach san pham",
     products: newProducts,
   });
+};
+
+//[GET] module.exports.index : index is name of function
+module.exports.detail = async (req, res) => {
+  try {
+    const product = await Product.findOne({
+      deleted: false,
+      status: "active",
+      slug: req.params.slug,
+    });
+    console.log(product);
+
+    // render in viewer
+    res.render("client/pages/products/detail", {
+      pageTitle: "Chi tiet san pham",
+      product: product,
+    });
+  } catch (error) {
+    res.redirect("back");
+  }
 };

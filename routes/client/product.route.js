@@ -8,6 +8,9 @@ const controller =
 //
 router.get("/", controller.index);
 
+router.get("/:slug", controller.detail);
+
+
 // /edit => product/edit and RUN FUNCTION in controller has name
 // is product
 
