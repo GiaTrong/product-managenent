@@ -36,7 +36,7 @@ const systemConfig = require("./config/system");
 database.connect();
 
 // use pug
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 // FLASH
@@ -49,8 +49,10 @@ app.use(flash());
 //  APP VARIABLES LOCALS => thiết lập biến toàn cục cho TẤT CẢ FILE BUG của bạn
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
+// khi lên file GLOBAL KO HIỂU THƯ MỤC "PUBLIC" như này
+// => __dirname: chạy ra cấu trúc thư mục cho chúng ta
 // nhúng file tĩnh
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 
 // Routes
 route(app);
