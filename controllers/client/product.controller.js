@@ -35,7 +35,7 @@ module.exports.detail = async (req, res) => {
       status: "active",
       slug: req.params.slug,
     });
-    console.log(product);
+    // console.log(product);
 
     // render in viewer
     res.render("client/pages/products/detail", {
