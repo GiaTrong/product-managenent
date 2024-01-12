@@ -223,6 +223,8 @@ module.exports.edit = async (req, res) => {
 
 // [EDIT - PATCH] /admin/products/edit/:id
 module.exports.editPatch = async (req, res) => {
+  console.log(req.body);
+
   req.body.price = parseInt(req.body.price);
   req.body.stock = parseInt(req.body.stock);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
@@ -239,6 +241,8 @@ module.exports.editPatch = async (req, res) => {
   if (req.file) {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
+
+  //
   try {
     await Product.updateOne({ _id: req.params.id }, req.body);
     req.flash("success", "Cập nhạt sp thành công");
@@ -247,4 +251,24 @@ module.exports.editPatch = async (req, res) => {
   }
   // render viewer
   res.redirect(`back`);
+};
+
+// [DETAIL - GET] /admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+
+    const product = await Product.findOne(find);
+    console.log(product)
+    res.render("admin/pages/product/detail", {
+      pageTitle: product.title,
+      product: product
+    })
+  } catch (error) {
+    req.flash("error", "Truy cập sản phẩm thất bại");
+    res.redirect("back")
+  }
 };
