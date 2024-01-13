@@ -188,7 +188,6 @@ if (formChangeMulti) {
 
 // SHOW ALERT
 const showAlert = document.querySelector("[show-alert]");
-console.log(showAlert);
 
 if (showAlert) {
   const time = parseInt(showAlert.getAttribute("data-time"));
@@ -208,17 +207,19 @@ if (showAlert) {
 
 // UPLOAD IMAGE
 const uploadImage = document.querySelector("[upload-image]");
-const deleteImageButton = uploadImage.querySelector("[delete-image-button]");
-
-if (uploadImage.querySelector("[upload-image-preview]").src) {
-  deleteImageButton.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    uploadImage.querySelector("[upload-image-preview]").src = "";
-  });
-}
 
 if (uploadImage) {
+  // delete button
+  const deleteImageButton = uploadImage.querySelector("[delete-image-button]");
+
+  if (uploadImage.querySelector("[upload-image-preview]").src) {
+    deleteImageButton.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      uploadImage.querySelector("[upload-image-preview]").src = "";
+    });
+  }
+
   // input => give a FAKE LINK => GIVE IMAGE
   const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
   // img => preview
@@ -249,3 +250,42 @@ if (uploadImage) {
   });
 }
 // END UPLOAD IMAGE
+
+// SORT
+const sort = document.querySelector("[sort]");
+if (sort) {
+  let url = new URL(window.location.href);
+  const sortSelect = sort.querySelector("[sort-select]");
+  const sortClear = sort.querySelector("[sort-clear]");
+
+  // SORT
+  sortSelect.addEventListener("change", (e) => {
+    const value = e.target.value;
+    const [sortKey, sortValue] = value.split("-");
+
+    url.searchParams.set("sortKey", sortKey);
+    url.searchParams.set("sortValue", sortValue);
+    window.location.href = url.href;
+  });
+
+  // CLEAR SORT
+  sortClear.addEventListener("click", () => {
+    url.searchParams.delete("sortKey");
+    url.searchParams.delete("sortValue");
+
+    window.location.href = url.href;
+  });
+
+  // add SELECTED for option
+  const sortKey = url.searchParams.get("sortKey");
+  const sortValue = url.searchParams.get("sortValue");
+
+  if (sortKey && sortValue) {
+    const stringSort = `${sortKey}-${sortValue}`;
+    const optionSelected = sortSelect.querySelector(
+      `option[value=${stringSort}]`
+    );
+    optionSelected.selected = true;
+  }
+}
+// END SORT

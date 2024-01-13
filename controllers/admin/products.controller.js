@@ -40,7 +40,6 @@ module.exports.index = async (req, res) => {
   //  END search
 
   // pagination
-
   // count products
   const countProduct = await Product.countDocuments(find);
 
@@ -52,15 +51,19 @@ module.exports.index = async (req, res) => {
     req.query,
     countProduct
   );
-  // console.log(totalPage)
 
   // END pagination
 
-  // give a data product
-  // .limit(number) => chỉ lấy tưng đấy sản phẩm thôi
-  // skip: bỏ qua bao nhiêu sản phẩm
+  // SORT
+  let sort = {};
+  if (req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  } else {
+    sort.position = "desc";
+  }
+  // END SORT
   const products = await Product.find(find)
-    .sort({ position: "desc" }) // sort FOLLOW 1 RECORD
+    .sort(sort) // sort FOLLOW 1 RECORD
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
@@ -262,13 +265,13 @@ module.exports.detail = async (req, res) => {
     };
 
     const product = await Product.findOne(find);
-    console.log(product)
+    console.log(product);
     res.render("admin/pages/product/detail", {
       pageTitle: product.title,
-      product: product
-    })
+      product: product,
+    });
   } catch (error) {
     req.flash("error", "Truy cập sản phẩm thất bại");
-    res.redirect("back")
+    res.redirect("back");
   }
 };
