@@ -190,9 +190,9 @@ module.exports.createPost = async (req, res) => {
   //   req.body.thumbnail = `/uploads/${req.file.filename}`;
   // }
   //create new Product
-  const product = new Product(req.body);
-  // // saving in DATABASE
-  await product.save();
+  // const product = new Product(req.body);
+  // // // saving in DATABASE
+  // await product.save();
   // render viewer
   // console.log(`${systemConfig.prefixAdmin}/products`)
   res.redirect(`${systemConfig.prefixAdmin}/products`);
